@@ -1,3 +1,9 @@
 {
-    "schedules": []
+  "schedules": [
+    {
+      "id": 1721181091235,
+      "name": "Rafael Zingra",
+      "when": "2024-07-17T21:00:00.000Z"
+    }
+  ]
 }
