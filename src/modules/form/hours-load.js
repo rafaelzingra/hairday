@@ -1,21 +1,26 @@
 import dayjs from "dayjs";
 import { openingHours } from "../../utils/opening-hours";
+import { schedules } from "../schedules/load";
 import { hoursClick } from "./hours-click";
 
 const hours = document.getElementById("hours")
 
-export function hoursLoad({ date }) {
+export function hoursLoad({ date ,schedules }) {
     hours.innerHTML=""
-    const openHours = openingHours.map((hour) => {
+
+    const unavailableHours = schedules.map((schedule) => dayjs(schedule.when).format("HH:mm"))    
+
+    const openHours = openingHours.map((hour) => {        
         
         const [schedules] = hour.split(':')
-        // console.log(schedules)
-        const isHourAvailable = dayjs(date).add(schedules, "hour").isAfter(dayjs())
-        // console.log(schedules, isHourPast)
+        
+        const isHourPast = dayjs(date).add(schedules, "hour").isBefore(dayjs())        
+
+        const available = !unavailableHours.includes(hour) && !isHourPast
 
         return {
             hour,
-            available: isHourAvailable
+            available
         }
     })    
 
